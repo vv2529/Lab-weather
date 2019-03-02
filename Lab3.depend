@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1551558552 source:d:\prog\lab3\copyright.cpp
+	"copyright.h"
+
+1551558528 d:\prog\lab3\copyright.h
+	<iostream>
+
+1551558444 source:d:\prog\lab3\main.cpp
+	<iostream>
+	"copyright.h"
+
