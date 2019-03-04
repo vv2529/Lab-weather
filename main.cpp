@@ -2,6 +2,8 @@
 // Shymanovych Vladyslav
 #include <iostream>
 #include "copyright.h"
+#include "Info.h"
+#include "Builder.h"
 
 using namespace std;
 

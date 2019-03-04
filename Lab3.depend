@@ -5,7 +5,18 @@
 1551558528 d:\prog\lab3\copyright.h
 	<iostream>
 
-1551558444 source:d:\prog\lab3\main.cpp
+1551705737 source:d:\prog\lab3\main.cpp
 	<iostream>
 	"copyright.h"
+
+1551706182 source:d:\prog\lab3\info.cpp
+	"Info.h"
+
+1551706387 d:\prog\lab3\info.h
+
+1551706379 source:d:\prog\lab3\builder.cpp
+	"Builder.h"
+
+1551706509 d:\prog\lab3\builder.h
+	"Info.h"
 
