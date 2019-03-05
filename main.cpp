@@ -34,15 +34,15 @@ bool stat(const Info& info, const char* fname) {
 
 bool isAllowedCommand(const char* cmd) {
     return !(
-        strcmp(cmd, "output")
-        && strcmp(cmd, "stat")
+        strcmp(cmd, "-output")
+        && strcmp(cmd, "-stat")
     );
 }
 bool handleCommand(const char* cmd, const char* arg, Info& info) {
-    if (!strcmp(cmd, "output")) {
+    if (!strcmp(cmd, "-output")) {
         return output(info, arg);
     }
-    else if (!strcmp(cmd, "stat")) {
+    else if (!strcmp(cmd, "-stat")) {
         return stat(info, arg);
     }
     else return false;
@@ -50,10 +50,13 @@ bool handleCommand(const char* cmd, const char* arg, Info& info) {
 
 void doCommand(int& cur, int argc, char** argv, Info& info) {
     char* cmd = argv[cur];
-    if (*cmd == '-') ++cmd;
-    cout << cmd << " ";
+    char* cmdForOutput = cmd;
+    strcpy(cmdForOutput, cmd);
+    if (*cmd == '-') ++cmdForOutput;
+    cout << cmdForOutput << " ";
+
+    ++cur;
     if (isAllowedCommand(cmd)) {
-        ++cur;
         if (cur >= argc) {
             cout << "undefined";
         }
