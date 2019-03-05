@@ -55,8 +55,8 @@ void doCommand(int& cur, int argc, char** argv, Info& info) {
     if (*cmd == '-') ++cmdForOutput;
     cout << cmdForOutput << " ";
 
-    ++cur;
     if (isAllowedCommand(cmd)) {
+        ++cur;
         if (cur >= argc) {
             cout << "undefined";
         }
