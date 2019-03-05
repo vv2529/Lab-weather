@@ -5,9 +5,12 @@
 1551558528 d:\prog\lab3\copyright.h
 	<iostream>
 
-1551705737 source:d:\prog\lab3\main.cpp
+1551810720 source:d:\prog\lab3\main.cpp
 	<iostream>
+	<cstring>
 	"copyright.h"
+	"Info.h"
+	"Builder.h"
 
 1551706182 source:d:\prog\lab3\info.cpp
 	"Info.h"

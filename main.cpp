@@ -49,7 +49,8 @@ bool handleCommand(const char* cmd, const char* arg, Info& info) {
 }
 
 void doCommand(int& cur, int argc, char** argv, Info& info) {
-    const char* cmd = ++argv[cur];
+    char* cmd = argv[cur];
+    if (*cmd == '-') ++cmd;
     cout << cmd << " ";
     if (isAllowedCommand(cmd)) {
         ++cur;
