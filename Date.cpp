@@ -18,8 +18,9 @@ void Date::load(
     double dayTempMax,
     double wind
 ) {
-    std::cout << ">>> Date.load\n";
+    std::cout << ">>> Date.load: ";
     Station station(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
+    std::cout << std::string(station);
 }
 
 bool Date::isValidYear(int year) {
@@ -44,9 +45,9 @@ bool Date::operator != (const Date& other) const noexcept {
 }
 bool Date::operator < (const Date& other) const noexcept {
     return month < other.getMonth()
-        || downfallAvg < other.getdownfallAvg()
-        || year < other.getYear()
-        || day < other.getDay();
+        || (month == other.getMonth() && downfallAvg < other.getdownfallAvg())
+        || (month == other.getMonth() && downfallAvg == other.getdownfallAvg() && year < other.getYear())
+        || (month == other.getMonth() && downfallAvg == other.getdownfallAvg() && year == other.getYear() && day < other.getDay());
 }
 bool Date::operator <= (const Date& other) const noexcept {
     return (*this < other) || (*this == other);
@@ -56,6 +57,12 @@ bool Date::operator > (const Date& other) const noexcept {
 }
 bool Date::operator >= (const Date& other) const noexcept {
     return !(*this < other);
+}
+Date::operator std::string () {
+    return "Date: " + std::to_string(year)
+        + "/" + std::to_string(month)
+        + "/" + std::to_string(day)
+        + "\n";
 }
 
 Date::Station::Station(
@@ -99,15 +106,15 @@ double Date::Station::getHumidity() const noexcept { return humidity; }
 double Date::Station::getWind() const noexcept { return wind; }
 
 bool Date::Station::operator == (const Station& other) const noexcept {
-    return humidity == other.humidity
-        || stationCode == other.stationCode;
+    return (humidity == other.humidity)
+        && (stationCode == other.stationCode);
 }
 bool Date::Station::operator != (const Station& other) const noexcept {
     return !(*this == other);
 }
 bool Date::Station::operator < (const Station& other) const noexcept {
     return humidity < other.humidity
-        || stationCode < other.stationCode;
+        || (humidity == other.humidity && stationCode < other.stationCode);
 }
 bool Date::Station::operator <= (const Station& other) const noexcept {
     return (*this < other) || (*this == other);
@@ -117,6 +124,17 @@ bool Date::Station::operator > (const Station& other) const noexcept {
 }
 bool Date::Station::operator >= (const Station& other) const noexcept {
     return !(*this < other);
+}
+
+Date::Station::operator std::string () {
+    return "Station: " + std::to_string(dayTempAvg)
+        + " | " + std::to_string(dayTempMin)
+        + " | " + std::to_string(humidity)
+        + " | " + std::to_string(downfall)
+        + " | \"" + stationCode + "\""
+        + " | " + std::to_string(dayTempMax)
+        + " | " + std::to_string(wind)
+        + "\n";
 }
 
 void roundDouble(double& d, int n) {

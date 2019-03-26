@@ -6,7 +6,11 @@
 #include <iostream>
 
 class Date {
+#ifdef DEBUG
+friend class TestStation;
+#endif // DEBUG
 public:
+    Date() = default;
     Date(int year, double month, double day);
     void load(
         double dayTempAvg,
@@ -29,19 +33,21 @@ public:
     bool operator <= (const Date&) const noexcept;
     bool operator > (const Date&) const noexcept;
     bool operator >= (const Date&) const noexcept;
+    operator std::string();
 private:
     int year;
     double month, day;
     // aggregated data
     double
-        humidityMin,
-        humidityMax,
-        downfallAvg;
+        humidityMin = 0,
+        humidityMax = 0,
+        downfallAvg = 0;
 
         static bool isValidYear(int);
 
     class Station {
     public:
+        Station() = default;
         Station(
             double dayTempAvg,
             double dayTempMin,
@@ -64,6 +70,7 @@ private:
         bool operator <= (const Station&) const noexcept;
         bool operator > (const Station&) const noexcept;
         bool operator >= (const Station&) const noexcept;
+        operator std::string();
     private:
         std::string stationCode;
         int downfall;

@@ -2,8 +2,9 @@
 #include "Info.h"
 
 void Info::load(int year, double month, double day) {
-    std::cout << ">>> Info.load\n";
+    std::cout << ">>> Info.load: ";
     Date date(year, month, day);
+    std::cout << std::string(date);
 }
 void Info::load(
     int year,
@@ -17,8 +18,9 @@ void Info::load(
     double dayTempMax,
     double wind
 ) {
-    std::cout << ">>> Info.load (+details)\n";
+    std::cout << ">>> Info.load (+details): ";
     Date date(year, month, day);
+    std::cout << std::string(date);
     date.load(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
 }
 
