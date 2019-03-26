@@ -2,7 +2,7 @@
 #include "Info.h"
 
 void Info::load(int year, double month, double day) {
-    cout << ">>> Info.load\n";
+    std::cout << ">>> Info.load\n";
     Date date(year, month, day);
 }
 void Info::load(
@@ -17,7 +17,7 @@ void Info::load(
     double dayTempMax,
     double wind
 ) {
-    cout << ">>> Info.load (+details)\n";
+    std::cout << ">>> Info.load (+details)\n";
     Date date(year, month, day);
     date.load(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
 }

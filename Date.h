@@ -2,7 +2,7 @@
 #pragma once
 #include <cmath>
 #include <string>
-#include <regez>
+#include <regex>
 #include <iostream>
 
 class Date {

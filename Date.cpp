@@ -6,7 +6,7 @@ Date::Date(int _year, double _month, double _day):
     month(_month),
     day(_day)
 {
-    if (!Date::isValidYear(year)) throw invalid_argument(to_string(year) + " is an invalid year");
+    if (!Date::isValidYear(year)) throw std::invalid_argument(std::to_string(year) + " is an invalid year");
 }
 
 void Date::load(
@@ -18,7 +18,7 @@ void Date::load(
     double dayTempMax,
     double wind
 ) {
-    cout << ">>> Date.load\n";
+    std::cout << ">>> Date.load\n";
     Station station(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
 }
 
@@ -40,7 +40,7 @@ bool Date::operator == (const Date& other) const noexcept {
         && day == other.getDay();
 }
 bool Date::operator != (const Date& other) const noexcept {
-    return !(this == other);
+    return !(*this == other);
 }
 bool Date::operator < (const Date& other) const noexcept {
     return month < other.getMonth()
@@ -49,13 +49,13 @@ bool Date::operator < (const Date& other) const noexcept {
         || day < other.getDay();
 }
 bool Date::operator <= (const Date& other) const noexcept {
-    return (this < other) || (this == other);
+    return (*this < other) || (*this == other);
 }
 bool Date::operator > (const Date& other) const noexcept {
-    return !(this <= other);
+    return !(*this <= other);
 }
 bool Date::operator >= (const Date& other) const noexcept {
-    return !(this < other);
+    return !(*this < other);
 }
 
 Date::Station::Station(
@@ -75,7 +75,7 @@ Date::Station::Station(
     dayTempMax(_dayTempMax),
     wind(_wind)
 {
-    if (!Date::Station::isValidStationCode(stationCode)) throw invalid_argument(stationCode + " is an invalid station code");
+    if (!Date::Station::isValidStationCode(stationCode)) throw std::invalid_argument(stationCode + " is an invalid station code");
     normalize();
 }
 
@@ -103,20 +103,20 @@ bool Date::Station::operator == (const Station& other) const noexcept {
         || stationCode == other.stationCode;
 }
 bool Date::Station::operator != (const Station& other) const noexcept {
-    return !(this == other);
+    return !(*this == other);
 }
 bool Date::Station::operator < (const Station& other) const noexcept {
     return humidity < other.humidity
         || stationCode < other.stationCode;
 }
 bool Date::Station::operator <= (const Station& other) const noexcept {
-    return (this < other) || (this == other);
+    return (*this < other) || (*this == other);
 }
 bool Date::Station::operator > (const Station& other) const noexcept {
-    return !(this <= other);
+    return !(*this <= other);
 }
 bool Date::Station::operator >= (const Station& other) const noexcept {
-    return !(this < other);
+    return !(*this < other);
 }
 
 void roundDouble(double& d, int n) {
