@@ -6,9 +6,7 @@
 #include <iostream>
 
 class Date {
-#ifdef DEBUG
 friend class TestStation;
-#endif // DEBUG
 public:
     Date() = default;
     Date(int year, double month, double day);
@@ -72,17 +70,16 @@ private:
         bool operator >= (const Station&) const noexcept;
         operator std::string();
     private:
-        std::string stationCode;
+        double dayTempAvg;
+        double dayTempMin;
+        double humidity;
         int downfall;
-        double
-            dayTempMin,
-            dayTempMax,
-            dayTempAvg,
-            humidity,
-            wind;
+        std::string stationCode;
+        double dayTempMax;
+        double wind;
 
-            static bool isValidStationCode(std::string);
-            void normalize() noexcept;
+        static bool isValidStationCode(std::string);
+        void normalize() noexcept;
     };
 
     class StationContainer {
