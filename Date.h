@@ -1,6 +1,8 @@
 // Shymanovych Vladyslav
 #pragma once
+#include <cmath>
 #include <string>
+#include <regez>
 #include <iostream>
 
 class Date {
@@ -36,6 +38,8 @@ private:
         humidityMax,
         downfallAvg;
 
+        static bool isValidYear(int);
+
     class Station {
     public:
         Station(
@@ -69,8 +73,13 @@ private:
             dayTempAvg,
             humidity,
             wind;
+
+            static bool isValidStationCode(std::string);
+            void normalize() noexcept;
     };
 
     class StationContainer {
     } stations;
 };
+
+void roundDouble(double&, int);
