@@ -6,7 +6,6 @@
 #include <iostream>
 
 class Date {
-friend class TestStation;
 public:
     Date() = default;
     Date(int year, double month, double day);
