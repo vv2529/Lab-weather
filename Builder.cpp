@@ -18,6 +18,7 @@ void Builder::loadData(Info& info, const char* _fname) {
                 if (state != Start) saveError(300);
                 headerLine = lineCount;
                 state = Header;
+                processHeader();
             } catch (...) { error(104); }
             break;
         case LineType::Line:
@@ -25,6 +26,7 @@ void Builder::loadData(Info& info, const char* _fname) {
                 ++recordCount;
                 if (state == Start || state == Footer) saveError(300);
                 state = Line;
+                processLine();
             } catch (...) { error(303); }
             break;
         case LineType::Footer:
@@ -32,6 +34,7 @@ void Builder::loadData(Info& info, const char* _fname) {
                 if (footerLine != -1) saveError(201);
                 footerLine = lineCount;
                 state = Footer;
+                processFooter();
             } catch (...) { error(204); }
             break;
         }
@@ -46,6 +49,67 @@ void Builder::loadData(Info& info, const char* _fname) {
         error(500);
     }
 }
+void Builder::processHeader() {
+    int maxDownfall;
+    processField(maxDownfall, FieldType::Int, 102, 103);
+    info->setMaxDownfall(maxDownfall);
+    if (!lexer.eof()) error(103);
+}
+void Builder::processFooter() {
+    size_t dateCount;
+    processField(dateCount, FieldType::Unsigned, 202, 203);
+    info->setDateCount(dateCount);
+    if (!lexer.eof()) error(203);
+}
+
+void Builder::processLine() {
+    int index;
+    int year;
+    double dayTempAvg, dayTempMin, humidity, month, day;
+    int downfall;
+    std::string stationCode;
+    double dayTempMax, wind;
+
+    processField(index, FieldType::Unsigned, 301, 302);
+    if (index != recordCount) error(301);
+
+    processField(year, FieldType::Int, 303, 302);
+    processField(dayTempAvg, FieldType::Double1, 303, 302);
+    processField(dayTempMin, FieldType::Double1, 303, 302);
+    processField(humidity, FieldType::Double1, 303, 302);
+    processField(month, FieldType::Double, 303, 302);
+    processField(day, FieldType::Double, 303, 302);
+    processField(downfall, FieldType::Int, 303, 302);
+    processField(stationCode, FieldType::String, 303, 302);
+    processField(dayTempMax, FieldType::Double1, 303, 302);
+    processField(wind, FieldType::Double, 303, 302);
+
+    info->load(year, dayTempAvg, dayTempMin, humidity, month, day, downfall, stationCode, dayTempMax, wind);
+    if (!lexer.eof()) error(302);
+}
+
+void Builder::processField(auto& dest, FieldType type, int codeWrong, int codeEOF) {
+    if (lexer.eof()) error(codeEOF);
+    std::string field;
+    if (lexer.next(field) != type) error(codeWrong);
+    convert(dest, field, type);
+}
+void Builder::convert(auto& dest, const std::string& src, FieldType type) {
+    switch (type) {
+        case FieldType::Unsigned:
+            dest = std::stoul(src);
+            break;
+        case FieldType::Int:
+            dest = std::stoi(src);
+            break;
+        case FieldType::Double1:
+        case FieldType::Double:
+            dest = std::stod(src);
+        default:
+            error(303);
+    }
+}
+
 void Builder::reset() {
     if (f.is_open()) f.close();
     f.clear();

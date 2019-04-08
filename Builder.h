@@ -20,8 +20,10 @@ private:
         state;
     Lexer lexer;
     void processHeader();
-    void processLine();
     void processFooter();
+    void processLine();
+    void processField(auto& dest, FieldType type, int codeWrong, int codeEOF);
+    void convert(auto& dest, const std::string&, FieldType);
     int savedError = -1;
     void saveError(int code) noexcept;
     void checkErrors();

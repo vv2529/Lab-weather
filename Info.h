@@ -19,6 +19,8 @@ public:
         double dayTempMax,
         double wind
     );
+    void setMaxDownfall(int) noexcept;
+    void setDateCount(size_t) noexcept;
     int getMaxDownfall() const noexcept;
     size_t getDateCount() const noexcept;
 private:
