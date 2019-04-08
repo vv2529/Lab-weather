@@ -11,26 +11,30 @@ public:
 private:
     std::ifstream f;
     std::string line;
-    size_t lineCount = 0;
+    int lineCount = 0, recordCount = 0;
+    const char* filename;
     Info* info = nullptr;
+    void reset();
     bool readline();
-    enum class State {Start, Header, Line, Footer, End, Error}
+    enum State {Start, Header, Line, Footer, End, IOError}
         state;
     Lexer lexer;
     void processHeader();
     void processLine();
     void processFooter();
-    void error(const std::string&);
+    int savedError = -1;
+    void saveError(int code) noexcept;
+    void checkErrors();
+    void error(int code);
 };
 
 class Error : public std::exception {
 public:
-    Error(const char* filename, size_t line, size_t code, const char* msg);
+    Error(const char* filename, int line, int code);
     const char* what() const noexcept;
 private:
     const char* filename;
-    size_t line, code;
-    const char* msg;
+    int line, code;
     const char* desc;
     const char* findDesc() const noexcept;
 };
