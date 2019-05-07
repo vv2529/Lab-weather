@@ -22,7 +22,7 @@ void doNothing() {
 void input(Info& info, const char* fname) {
     cout << "input " << fname << " : ";
     Builder builder;
-    builder.loadData(info, fname);
+    builder.loadData(&info, fname);
     cout << "OK\n";
 }
 bool output(const Info& info, const char* fname) {
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
         }
         cout << "*****\n";
     } catch (const exception& error) {
-        cout << "ERROR: " << error.what() << "\n";
+        cout << error.what() << "\n";
     }
 
     return 0;

@@ -6,16 +6,16 @@
 
 class Info {
 public:
-    void load(int year, double month, double day);
+    void load(int year, int month, int day);
     void load(
         int year,
         double dayTempAvg,
         double dayTempMin,
         double humidity,
-        double month,
-        double day,
+        int month,
+        int day,
         int downfall,
-        std::string stationCode,
+        const std::string& stationCode,
         double dayTempMax,
         double wind
     );
@@ -24,7 +24,7 @@ public:
     int getMaxDownfall() const noexcept;
     size_t getDateCount() const noexcept;
 private:
-    int maxDownfall;
-    size_t dateCount;
+    int maxDownfall = 0;
+    size_t dateCount = 0;//dates.size()
     DateContainer dates;
 };
