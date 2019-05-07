@@ -98,7 +98,6 @@ std::string Builder::processField(auto& dest, FieldType type, int codeWrong, int
     if (lexer.eof()) saveError(codeEOF);
     std::string field;
     FieldType realType = lexer.next(field);
-    std::cout << "[" << field << "]" << getFieldTypeText(realType) << ' ' << getFieldTypeText(type) << '\n';
     if (type == FieldType::Double1) type = FieldType::Double;
     if (realType == FieldType::Double1) realType = FieldType::Double;
     if (!(realType == type
