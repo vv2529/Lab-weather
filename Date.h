@@ -1,5 +1,6 @@
 // Shymanovych Vladyslav
 #pragma once
+#include "Container.h"
 #include "Station.h"
 #include <string>
 #include <iostream>
@@ -40,6 +41,5 @@ private:
 
     static bool isValidYear(int);
 
-    class StationContainer {
-    } stations;
+    Container<Station> stations;
 };

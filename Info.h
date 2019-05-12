@@ -1,6 +1,7 @@
 // Shymanovych Vladyslav
 #pragma once
-#include "DateContainer.h"
+#include "Container.h"
+#include "Date.h"
 #include <string>
 #include <iostream>
 
@@ -26,5 +27,5 @@ public:
 private:
     int maxDownfall = 0;
     size_t dateCount = 0;//dates.size()
-    DateContainer dates;
+    Container<Date> dates;
 };
