@@ -2,12 +2,13 @@
 #pragma once
 #include "Container.h"
 #include "Date.h"
+#include <functional>
 #include <string>
 #include <iostream>
 
 class Info {
 public:
-    void load(int year, int month, int day);
+    Date& load(int year, int month, int day);
     void load(
         int year,
         double dayTempAvg,

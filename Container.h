@@ -1,5 +1,6 @@
 // Shymanovych Vladyslav
 #pragma once
+#include <functional>
 #include <cstdlib>
 #include <iostream>
 
@@ -8,8 +9,8 @@ using sizetype = std::size_t;
 // head is empty
 template<class T> class Container {
 
-    using Fmatch = bool (const T&);
-    using Fcompare = short (const T&, const T&);
+    using Fmatch = std::function<bool (const T&)>;// bool(*) (const T&);
+    using Fcompare = std::function<short (const T&, const T&)>;// short(*) (const T&, const T&);
 
 public:
     Container();
@@ -20,7 +21,7 @@ public:
     sizetype size() const noexcept;
     bool empty() const noexcept;
     void clear();
-    void push(T&);
+    void push(T*);
     void pop();
     const T& top() const;
     T& top();

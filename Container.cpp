@@ -11,8 +11,8 @@ template<class T>void Container<T>::clear() {
     while (!empty())
         pop();
 }
-template<class T>void Container<T>::push(T& data) {
-    head->next = new Node{&data, head->next};
+template<class T>void Container<T>::push(T* data) {
+    head->next = new Node{data, head->next};
     ++count;
 }
 template<class T>void Container<T>::pop() {
@@ -37,7 +37,7 @@ template<class T>T* Container<T>::find(Fmatch f) {
 
     do {
         cur = cur->next;
-        if (f(cur)) return cur->data;
+        if (f(*(cur->data))) return cur->data;
     } while (cur->next);
 
     return nullptr;

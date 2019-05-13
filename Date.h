@@ -31,6 +31,8 @@ public:
     bool operator > (const Date&) const noexcept;
     bool operator >= (const Date&) const noexcept;
     operator std::string() const;
+
+    Container<Station> stations;
 private:
     int year, month, day;
     // aggregated data
@@ -40,6 +42,4 @@ private:
         downfallAvg = 0;
 
     static bool isValidYear(int);
-
-    Container<Station> stations;
 };

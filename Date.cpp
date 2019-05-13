@@ -19,8 +19,10 @@ void Date::load(
     double wind
 ) {
     std::cout << ">>> Date.load: ";
-    Station station(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
-    std::cout << std::string(station);
+    Station* station = new Station(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
+    std::cout << std::string(*station);
+    stations.push(station);
+    std::cout << "size: " << std::to_string(stations.size()) << "\n";
 }
 
 bool Date::isValidYear(int year) {
