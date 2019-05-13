@@ -29,7 +29,7 @@ void Builder::loadData(Info* _info, const char* _fname) {
                 if (state == Start || state == Footer) saveError(300);
                 state = Line;
                 processLine();
-            } catch (const Error& err) { throw err; }
+            } catch (const std::exception& err) { error(303, lineCount, err.what()); }
             catch (...) { saveError(303); }
             break;
         case LineType::Footer:
@@ -49,6 +49,8 @@ void Builder::loadData(Info* _info, const char* _fname) {
     if (footerLine == -1) saveError(200);
 
     checkErrors();
+
+    info->test();
 
     } catch (std::bad_alloc& _error) {
         error(500, -1);
@@ -163,6 +165,6 @@ void Builder::saveError(int code) noexcept {
 void Builder::checkErrors() {
     if (savedError != INT_MAX) error(savedError, savedLine);
 }
-void Builder::error(int code, int line) {
-    throw Error(filename, line, code);
+void Builder::error(int code, int line, const char* msg) {
+    throw Error(filename, line, code, msg);
 }

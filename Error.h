@@ -6,7 +6,7 @@
 class Error : public std::exception {
 using Tmap = std::unordered_map<int, std::string>;
 public:
-    Error(const char* filename, int line, int code);
+    Error(const char* filename, int line, int code, const char* msg="");
     const char* what() const noexcept;
     operator std::string () const;
 private:

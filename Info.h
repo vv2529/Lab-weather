@@ -24,6 +24,7 @@ public:
     void setMaxDownfall(int) noexcept;
     int getMaxDownfall() const noexcept;
     size_t getDateCount() const noexcept;
+    void test();
 private:
     int maxDownfall = 0;
     Container<Date> dates;

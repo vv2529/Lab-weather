@@ -31,5 +31,5 @@ private:
     int savedError = INT_MAX, savedLine = INT_MAX;
     void saveError(int code) noexcept;
     void checkErrors();
-    void error(int code, int line);
+    void error(int code, int line, const char* msg="");
 };

@@ -40,6 +40,17 @@ void Info::load(
     std::cout << std::string(dates.top().stations.top());
 }
 
+void Info::test() {
+    std::cout << "DATES:\n" << std::string(dates);
+    auto _sort = [](const Date& a, const Date& b) -> short {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    };
+    dates.sort(_sort);
+    std::cout << "SORTED:\n" << std::string(dates);
+}
+
 void Info::setMaxDownfall(int value) noexcept { maxDownfall = value; }
 int Info::getMaxDownfall() const noexcept { return maxDownfall; }
 size_t Info::getDateCount() const noexcept { return dates.size(); }

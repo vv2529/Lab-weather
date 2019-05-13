@@ -3,6 +3,7 @@
 #include <functional>
 #include <cstdlib>
 #include <iostream>
+#include <string>
 
 using sizetype = std::size_t;
 // ...nodes...<-head
@@ -27,6 +28,7 @@ public:
     T& top();
     T* find(Fmatch); // return null if not found; starts from head
     void sort(Fcompare); // bubble sort
+    operator std::string() const;
 protected:
     struct Node {
         T* data;

@@ -41,5 +41,7 @@ private:
         humidityMax = 0,
         downfallAvg = 0;
 
-    static bool isValidYear(int);
+    static bool isValidYear(int); // 4 digits
+    static bool isValidMonth(int); // 1 <= month <= 12
+    static bool isValidDay(int); // 1 <= day <= 31
 };

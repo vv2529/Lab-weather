@@ -22,12 +22,13 @@ Error::Tmap Error::desc({
 
 
 
-Error::Error(const char* _filename, int _line, int _code):
+Error::Error(const char* _filename, int _line, int _code, const char* msg):
     filename(_filename),
     line(_line),
     code(_code)
 {
     _what = "ERROR " + std::to_string(code) + " (line " + std::to_string(line) + "): " + desc[code];
+    if (*msg != '\0') _what += std::string(" : ") + msg;
 }
 const char* Error::what() const noexcept {
     return _what.c_str();

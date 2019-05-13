@@ -69,8 +69,7 @@ Station::operator std::string () const {
         + " | " + std::to_string(downfall)
         + " | \"" + stationCode + "\""
         + " | " + std::to_string(dayTempMax)
-        + " | " + std::to_string(wind)
-        + "\n";
+        + " | " + std::to_string(wind);
 }
 
 void roundDouble(double& d, int n) {

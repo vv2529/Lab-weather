@@ -6,7 +6,8 @@ Date::Date(int _year, int _month, int _day):
     month(_month),
     day(_day)
 {
-    if (!Date::isValidYear(year)) throw std::invalid_argument(std::to_string(year) + " is an invalid year");
+    if (!Date::isValidYear(year) || !Date::isValidMonth(month) || !Date::isValidDay(day))
+        throw std::invalid_argument("Invalid date: " + std::to_string(day) + '.' + std::to_string(month) + '.' + std::to_string(year));
 }
 
 void Date::load(
@@ -27,6 +28,12 @@ void Date::load(
 
 bool Date::isValidYear(int year) {
     return (year >= 1000) && (year <= 9999);
+}
+bool Date::isValidMonth(int month) {
+    return (month >= 1) && (month <= 12);
+}
+bool Date::isValidDay(int day) {
+    return (day >= 1) && (day <= 31);
 }
 
 int Date::getYear() const noexcept { return year; }
@@ -63,6 +70,5 @@ bool Date::operator >= (const Date& other) const noexcept {
 Date::operator std::string () const {
     return "Date: " + std::to_string(year)
         + "/" + std::to_string(month)
-        + "/" + std::to_string(day)
-        + "\n";
+        + "/" + std::to_string(day);
 }
