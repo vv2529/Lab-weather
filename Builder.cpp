@@ -63,7 +63,7 @@ void Builder::processHeader() {
 void Builder::processFooter() {
     size_t _dateCount;
     processField(_dateCount, FieldType::Unsigned, 202, 203);
-    info->setDateCount(_dateCount);
+    if (_dateCount != info->getDateCount()) saveError(202);
     if (checkExtraFields()) saveError(203);
 }
 

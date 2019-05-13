@@ -22,11 +22,9 @@ public:
         double wind
     );
     void setMaxDownfall(int) noexcept;
-    void setDateCount(size_t) noexcept;
     int getMaxDownfall() const noexcept;
     size_t getDateCount() const noexcept;
 private:
     int maxDownfall = 0;
-    size_t dateCount = 0;//dates.size()
     Container<Date> dates;
 };

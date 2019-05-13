@@ -41,6 +41,5 @@ void Info::load(
 }
 
 void Info::setMaxDownfall(int value) noexcept { maxDownfall = value; }
-void Info::setDateCount(size_t value) noexcept { dateCount = value; }
 int Info::getMaxDownfall() const noexcept { return maxDownfall; }
-size_t Info::getDateCount() const noexcept { return dateCount; }
+size_t Info::getDateCount() const noexcept { return dates.size(); }
