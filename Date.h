@@ -44,4 +44,6 @@ private:
     static bool isValidYear(int); // 4 digits
     static bool isValidMonth(int); // 1 <= month <= 12
     static bool isValidDay(int); // 1 <= day <= 31
+
+    void updateData() noexcept;
 };

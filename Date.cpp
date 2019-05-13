@@ -21,9 +21,10 @@ void Date::load(
 ) {
     std::cout << ">>> Date.load: ";
     Station* station = new Station(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
-    std::cout << std::string(*station);
+    std::cout << std::string(*station) << "\n";
     stations.push(station);
     std::cout << "size: " << std::to_string(stations.size()) << "\n";
+    updateData();
 }
 
 bool Date::isValidYear(int year) {
@@ -36,12 +37,33 @@ bool Date::isValidDay(int day) {
     return (day >= 1) && (day <= 31);
 }
 
+void Date::updateData() noexcept {
+    if (stations.size() == 1) {
+        humidityMin = humidityMax = stations.top().getHumidity();
+        downfallAvg = stations.top().getDownfall();
+    } else if (stations.size() > 1) {
+        if (humidityMin > stations.top().getHumidity())
+            humidityMin = stations.top().getHumidity();
+        else if (humidityMax < stations.top().getHumidity())
+            humidityMax = stations.top().getHumidity();
+        downfallAvg = (downfallAvg * (stations.size() - 1) + stations.top().getDownfall()) / stations.size();
+        // Station::roundDouble(downfallAvg, 1);
+    }
+    std::cout << "Aggregated (size=" << std::to_string(stations.size()) << "): " << std::to_string(humidityMin)
+        << " | " << std::to_string(humidityMax)
+        << " | " << std::to_string(getdownfallAvg());
+}
+
 int Date::getYear() const noexcept { return year; }
 int Date::getMonth() const noexcept { return month; }
 int Date::getDay() const noexcept { return day; }
 double Date::gethumidityMin() const noexcept { return humidityMin; }
 double Date::gethumidityMax() const noexcept { return humidityMax; }
-double Date::getdownfallAvg() const noexcept { return downfallAvg; }
+double Date::getdownfallAvg() const noexcept {
+    double d = downfallAvg;
+    Station::roundDouble(d, 1);
+    return d;
+}
 
 bool Date::operator == (const Date& other) const noexcept {
     return month == other.getMonth()

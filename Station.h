@@ -30,6 +30,7 @@ public:
     bool operator <= (const Station&) const noexcept;
     bool operator > (const Station&) const noexcept;
     bool operator >= (const Station&) const noexcept;
+    static void roundDouble(double&, int);
     operator std::string() const;
 private:
     double dayTempAvg;
@@ -43,5 +44,3 @@ private:
     static bool isValidStationCode(const std::string&);
     void normalize() noexcept;
 };
-
-void roundDouble(double&, int);

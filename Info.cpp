@@ -11,13 +11,13 @@ Date& Info::load(int year, int month, int day) {
     };
     Date* date = dates.find(_findDate);
     if (date) {
-        std::cout << "Duplicate: " << std::string(*date);
+        std::cout << "Duplicate: " << std::string(*date) << "\n";
         return *date;
     }
     else {
         Date* date = new Date(year, month, day);
         dates.push(date);
-        std::cout << std::string(*date);
+        std::cout << std::string(*date) << "\n";
         return *date;
     }
 }
@@ -37,7 +37,7 @@ void Info::load(
     load(year, month, day)
         .load(dayTempAvg, dayTempMin, humidity, downfall, stationCode, dayTempMax, wind);
     std::cout << "size: " << std::to_string(dates.size()) << "\n";
-    std::cout << std::string(dates.top().stations.top());
+    std::cout << std::string(dates.top().stations.top()) << "\n";
 }
 
 void Info::test() {

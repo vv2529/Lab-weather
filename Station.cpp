@@ -26,11 +26,11 @@ bool Station::isValidStationCode(const std::string& code) {
     return std::regex_match(code, std::regex("\\d{3,11}"));
 }
 void Station::normalize() noexcept {
-    roundDouble(dayTempAvg, 1);
-    roundDouble(dayTempMin, 1);
-    roundDouble(dayTempMax, 1);
-    roundDouble(humidity, 1);
-    roundDouble(wind, 1);
+    Station::roundDouble(dayTempAvg, 1);
+    Station::roundDouble(dayTempMin, 1);
+    Station::roundDouble(dayTempMax, 1);
+    Station::roundDouble(humidity, 1);
+    Station::roundDouble(wind, 1);
 }
 
 const std::string& Station::getStationCode() const noexcept { return stationCode; }
@@ -72,7 +72,7 @@ Station::operator std::string () const {
         + " | " + std::to_string(wind);
 }
 
-void roundDouble(double& d, int n) {
+void Station::roundDouble(double& d, int n) {
     int n2 = n;
     while (n2--) d *= 10;
     d = std::round(d);
