@@ -3,7 +3,6 @@
 #include "Container.h"
 #include "Station.h"
 #include <string>
-#include <iostream>
 
 class Date {
 public:
@@ -34,8 +33,6 @@ public:
     operator std::string() const;
     void prepareData();
     void iterate(Container<Station>::FIteration f);
-
-    Container<Station> stations;
 private:
     int year, month, day;
     // aggregated data
@@ -48,6 +45,8 @@ private:
     static bool isValidYear(int); // 4 digits
     static bool isValidMonth(int); // 1 <= month <= 12
     static bool isValidDay(int); // 1 <= day <= 31
+
+    Container<Station> stations;
 
     void updateData() noexcept;
 };

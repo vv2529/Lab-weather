@@ -3,7 +3,6 @@
 #include "Container.h"
 #include "Date.h"
 #include <string>
-#include <iostream>
 
 class Info {
 public:

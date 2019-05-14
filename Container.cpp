@@ -52,20 +52,14 @@ template<class T>void Container<T>::sort(Fcompare f) {
         last = 0;
         cur = head;
         for (size_t i = 0; i < ceil; cur = cur->next, ++i) {
-            std::cout << "   Items compared: " << std::string(*(cur->next->data)) << ", " << std::string(*(cur->next->next->data));
             if (f(*cur->next->data, *cur->next->next->data) > 0) {
                 swapAdjacentNodes(cur);
                 last = i;
                 isSorted = false;
-                std::cout << " => swapped\n";
-            } else {
-                std::cout << " => not swapped\n";
             }
         }
         ceil = last;
-        std::cout << "Iteration (last=" << std::to_string(last) << ")\n";
     } while (!isSorted);
-    std::cout << "<!-- end of sort -->\n";
 }
 template<class T>void Container<T>::swapAdjacentNodes(Node* prev) {
     Node *A = prev->next;

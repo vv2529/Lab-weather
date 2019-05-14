@@ -33,7 +33,10 @@ void input(Info& info, const char* fname) {
 bool output(Info& info, const char* fname) {
     ostream *f;
     ofstream f2;
-    if (strcmp(fname, "#con") == 0) f = &cout;
+    if (strcmp(fname, "#con") == 0) {
+        f = &cout;
+        cout << '\n';
+    }
     else {
         f2.open(fname);
         f = &f2;
@@ -68,7 +71,10 @@ bool output(Info& info, const char* fname) {
 bool stat(Info& info, const char* fname) {
     ostream *f;
     ofstream f2;
-    if (strcmp(fname, "#con") == 0) f = &cout;
+    if (strcmp(fname, "#con") == 0) {
+        f = &cout;
+        cout << '\n';
+    }
     else {
         f2.open(fname);
         f = &f2;
@@ -81,11 +87,9 @@ bool stat(Info& info, const char* fname) {
         tempSum += date.getdayTempMaxAvg();
     });
     double tempAvg = tempSum / info.getDateCount();
-    cout << "STAT: " << tempAvg << '\n';
 
     info.iterate([&] (Date& date) {
         if (date.getdayTempMaxAvg() < tempAvg) {
-            cout << '\t' << date.getdayTempMaxAvg() << " : " << string(date) << '\n';
             (*f) << date.getDay() <<del<<
                 date.getMonth() <<del<<
                 date.getYear() <<del<<

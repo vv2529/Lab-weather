@@ -2,7 +2,6 @@
 #pragma once
 #include <functional>
 #include <cstdlib>
-#include <iostream>
 #include <string>
 
 using sizetype = std::size_t;
@@ -35,6 +34,7 @@ public:
         }
     ); // bubble sort
     operator std::string() const;
+
 protected:
     struct Node {
         T* data;
@@ -45,6 +45,7 @@ protected:
 
     void throwIfEmpty(const std::string&) const;
     void swapAdjacentNodes(Node* prev);
+
 public:
     class Iterator {
     public:
