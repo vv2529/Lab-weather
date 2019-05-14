@@ -1,4 +1,6 @@
 // Shymanovych Vladyslav
+#ifndef CONTAINER_H
+#define CONTAINER_H
 #include "Container.h"
 
 template<class T>Container<T>::Container() {
@@ -105,3 +107,5 @@ template<class T> void Container<T>::iterate(FIteration f) {
         f(**i);
     }
 }
+
+#endif
