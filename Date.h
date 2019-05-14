@@ -31,6 +31,8 @@ public:
     bool operator > (const Date&) const noexcept;
     bool operator >= (const Date&) const noexcept;
     operator std::string() const;
+    void prepareData();
+    void iterate(Container<Station>::FIterationConst f);
 
     Container<Station> stations;
 private:

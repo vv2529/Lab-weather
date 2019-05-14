@@ -24,8 +24,10 @@ public:
     void setMaxDownfall(int) noexcept;
     int getMaxDownfall() const noexcept;
     size_t getDateCount() const noexcept;
-    void test();
+    void prepareData();
+    void iterate(Container<Date>::FIterationConst f);
 private:
     int maxDownfall = 0;
     Container<Date> dates;
+    void iterateAndModify(Container<Date>::FIteration f);
 };

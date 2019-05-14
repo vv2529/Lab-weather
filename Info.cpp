@@ -40,15 +40,20 @@ void Info::load(
     std::cout << std::string(dates.top().stations.top()) << "\n";
 }
 
-void Info::test() {
+void Info::prepareData() {
     std::cout << "DATES:\n" << std::string(dates);
-    auto _sort = [](const Date& a, const Date& b) -> short {
-        if (a < b) return -1;
-        if (a > b) return 1;
-        return 0;
-    };
-    dates.sort(_sort);
+    dates.sort();
     std::cout << "SORTED:\n" << std::string(dates);
+    iterateAndModify([&] (Date& date) {
+        date.prepareData();
+    });
+}
+
+void Info::iterate(Container<Date>::FIterationConst f) {
+    dates.iterate(f);
+}
+void Info::iterateAndModify(Container<Date>::FIteration f) {
+    dates.iterate(f);
 }
 
 void Info::setMaxDownfall(int value) noexcept { maxDownfall = value; }

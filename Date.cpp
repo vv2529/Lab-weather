@@ -54,6 +54,16 @@ void Date::updateData() noexcept {
         << " | " << std::to_string(getdownfallAvg());
 }
 
+void Date::prepareData() {
+    std::cout << "STATIONS:\n" << std::string(stations);
+    stations.sort();
+    std::cout << "SORTED:\n" << std::string(stations);
+}
+
+void Date::iterate(const Container<Station>::FIterationConst f) {
+    stations.iterate(f);
+}
+
 int Date::getYear() const noexcept { return year; }
 int Date::getMonth() const noexcept { return month; }
 int Date::getDay() const noexcept { return day; }

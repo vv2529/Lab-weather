@@ -1,10 +1,14 @@
 // variant 96
 // Shymanovych Vladyslav
 #include <iostream>
+#include <fstream>
 #include <cstring>
 #include "copyright.h"
 #include "Info.h"
 #include "Builder.h"
+#include "Date.h"
+#include "Station.h"
+#include "Lexer.h"
 
 using namespace std;
 
@@ -25,7 +29,35 @@ void input(Info& info, const char* fname) {
     builder.loadData(&info, fname);
     cout << "OK\n";
 }
-bool output(const Info& info, const char* fname) {
+bool output(Info& info, const char* fname) {
+    ostream *f;
+    if (strcmp(fname, "#con") == 0) f = &cout;
+    else {
+        ofstream f2(fname);
+        f = &f2;
+        //(*f).open(fname)
+    }
+    if (!*f) return false;
+    const string del = "\t"s + Lexer::delimiters[0] + "\t"s;
+    size_t record = 0;
+
+    auto _output = [&] (const Date& date) {
+        date.iterate([&] (const Station& station) {
+            *f << ++record <<del<<
+                date.getYear() <<del<<
+                station.getDayTempAvg() <<del<<
+                station.getDayTempMin() <<del<<
+                station.getHumidity() <<del<<
+                date.getMonth() <<del<<
+                date.getDay() <<del<<
+                station.getDownfall() <<del<<
+                station.getStationCode() <<del<<
+                station.getDayTempMax() <<del<<
+                station.getWind() << '\n';
+        });
+    };
+
+    info.iterate(_output);
     return true;
 }
 bool stat(const Info& info, const char* fname) {
@@ -63,8 +95,8 @@ void doCommand(int& cur, int argc, char** argv, Info& info) {
         else {
             const char* arg = argv[cur];
             cout << arg << " : ";
+            bool res = handleCommand(cmd, arg, info);
             if (strcmp(arg, "#con") != 0) {
-                bool res = handleCommand(cmd, arg, info);
                 cout << (res ? "OK" : "UPS");
             }
         }

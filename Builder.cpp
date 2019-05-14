@@ -50,7 +50,7 @@ void Builder::loadData(Info* _info, const char* _fname) {
 
     checkErrors();
 
-    info->test();
+    info->prepareData();
 
     } catch (std::bad_alloc& _error) {
         error(500, -1);

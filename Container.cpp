@@ -85,3 +85,30 @@ template<class T> Container<T>::operator std::string() const {
     }
     return s;
 }
+
+
+
+template<class T> Container<T>::Iterator::Iterator(Node* node) {
+    cur = node;
+}
+template<class T> typename Container<T>::Iterator& Container<T>::Iterator::operator ++ () {
+    if (cur) cur = cur->next;
+    return *this;
+}
+template<class T> T* Container<T>::Iterator::operator * () const {
+    // if (!cur) throw std::out_of_range("Unable to access the element, invalid pointer");
+    return cur->data;
+}
+template<class T> bool Container<T>::Iterator::operator != (const Iterator& other) const noexcept {
+    return this->cur != other.cur;
+}
+
+template<class T> typename Container<T>::Iterator Container<T>::begin() const noexcept { return Iterator(head); }
+template<class T> typename Container<T>::Iterator Container<T>::end() const noexcept { return Iterator(); }
+
+template<class T> void Container<T>::iterate(FIteration f) {
+    Iterator i = begin(), i_end = end();
+    for (i; i != i_end; ++i) {
+        f(**i);
+    }
+}
