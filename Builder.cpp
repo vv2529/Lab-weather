@@ -57,14 +57,12 @@ void Builder::loadData(Info* _info, const char* _fname) {
     }
 }
 void Builder::processHeader() {
-    int _maxDownfall;
-    processField(_maxDownfall, FieldType::Int, 102, 103);
+    int _maxDownfall = processField(FieldType::Int, 102, 103);
     info->setMaxDownfall(_maxDownfall);
     if (checkExtraFields()) saveError(103);
 }
 void Builder::processFooter() {
-    size_t _dateCount;
-    processField(_dateCount, FieldType::Unsigned, 202, 203);
+    size_t _dateCount = processField(FieldType::Unsigned, 202, 203);
     if (_dateCount != info->getDateCount()) saveError(202);
     if (checkExtraFields()) saveError(203);
 }
@@ -77,29 +75,33 @@ void Builder::processLine() {
     std::string stationCode;
     double dayTempMax, wind;
 
-    processField(index, FieldType::Unsigned, 301, 302);
+    index = processField(FieldType::Unsigned, 301, 302);
     if (index != recordCount) saveError(301);
 
-    processField(year, FieldType::Int, 303, 302);
-    processField(dayTempAvg, FieldType::Double1, 303, 302);
-    processField(dayTempMin, FieldType::Double1, 303, 302);
-    processField(humidity, FieldType::Double1, 303, 302);
-    processField(month, FieldType::Int, 303, 302);
-    processField(day, FieldType::Int, 303, 302);
-    processField(downfall, FieldType::Int, 303, 302);
+    year = (int) processField (FieldType::Int, 303, 302);
+    dayTempAvg = processField (FieldType::Double1, 303, 302);
+    dayTempMin = processField (FieldType::Double1, 303, 302);
+    humidity   = processField (FieldType::Double1, 303, 302);
+    month =(int) processField (FieldType::Int, 303, 302);
+    day  = (int) processField (FieldType::Int, 303, 302);
+    downfall=(int)processField (FieldType::Int, 303, 302);
+    getField (stationCode, 302);
+    dayTempMax = processField (FieldType::Double1, 303, 302);
+    wind       = processField (FieldType::Double, 303, 302);
+
     if (downfall > realMaxDownfall) realMaxDownfall = downfall;
-    stationCode = processField(stationCode, FieldType::String, 303, 302);
-    processField(dayTempMax, FieldType::Double1, 303, 302);
-    processField(wind, FieldType::Double, 303, 302);
 
     if (checkExtraFields()) saveError(302);
     info->load(year, dayTempAvg, dayTempMin, humidity, month, day, downfall, stationCode, dayTempMax, wind);
 }
 
-std::string Builder::processField(auto& dest, FieldType type, int codeWrong, int codeEOF) {
+FieldType Builder::getField(std::string& field, int codeEOF) {
     if (lexer.eof()) saveError(codeEOF);
+    return lexer.next(field);
+}
+double Builder::processField(FieldType type, int codeWrong, int codeEOF) {
     std::string field;
-    FieldType realType = lexer.next(field);
+    FieldType realType = getField(field, codeEOF);
     if (type == FieldType::Double1) type = FieldType::Double;
     if (realType == FieldType::Double1) realType = FieldType::Double;
     if (!(realType == type
@@ -108,26 +110,27 @@ std::string Builder::processField(auto& dest, FieldType type, int codeWrong, int
         || (type == FieldType::Double && realType == FieldType::Unsigned)
         || (type == FieldType::String && realType != FieldType::Empty)))
         saveError(codeWrong);
-    convert(dest, field, type);
-    return field;
+    return convert(field, type);
 }
-void Builder::convert(auto& dest, const std::string& src, FieldType type) {
+double Builder::convert(const std::string& src, FieldType type) {
+    double d;
     switch (type) {
         case FieldType::Unsigned:
-            dest = std::stoul(src);
+            d = (double) std::stoul(src);
             break;
         case FieldType::Int:
-            dest = std::stoi(src);
+            d = (double) std::stoi(src);
             break;
         case FieldType::Double1:
         case FieldType::Double:
-            dest = std::stod(src);
+            d = std::stod(src);
             break;
         case FieldType::String:
             break;
         default:
             saveError(303);
     }
+    return d;
 }
 bool Builder::checkExtraFields() {
     std::string field;

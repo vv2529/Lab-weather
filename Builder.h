@@ -24,8 +24,9 @@ private:
     void processHeader();
     void processFooter();
     void processLine();
-    std::string processField(auto& dest, FieldType type, int codeWrong, int codeEOF);
-    void convert(auto& dest, const std::string&, FieldType);
+    FieldType getField(std::string& field, int codeEOF);
+    double processField(FieldType type, int codeWrong, int codeEOF);
+    double convert(const std::string&, FieldType);
     bool checkExtraFields();
     int realMaxDownfall = 0;
     int savedError = INT_MAX, savedLine = INT_MAX;

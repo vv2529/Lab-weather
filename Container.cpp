@@ -1,5 +1,4 @@
 // Shymanovych Vladyslav
-#pragma once
 #include "Container.h"
 
 template<class T>Container<T>::Container() {
