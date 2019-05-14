@@ -103,12 +103,12 @@ template<class T> bool Container<T>::Iterator::operator != (const Iterator& othe
     return this->cur != other.cur;
 }
 
-template<class T> typename Container<T>::Iterator Container<T>::begin() const noexcept { return Iterator(head); }
+template<class T> typename Container<T>::Iterator Container<T>::begin() const noexcept { return Iterator(head->next); }
 template<class T> typename Container<T>::Iterator Container<T>::end() const noexcept { return Iterator(); }
 
 template<class T> void Container<T>::iterate(FIteration f) {
     Iterator i = begin(), i_end = end();
-    for (i; i != i_end; ++i) {
+    for (; i != i_end; ++i) {
         f(**i);
     }
 }

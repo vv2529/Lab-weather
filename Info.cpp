@@ -29,7 +29,7 @@ void Info::load(
     int month,
     int day,
     int downfall,
-    const std::string& stationCode,
+    const std::string stationCode,
     double dayTempMax,
     double wind
 ) {
@@ -44,15 +44,12 @@ void Info::prepareData() {
     std::cout << "DATES:\n" << std::string(dates);
     dates.sort();
     std::cout << "SORTED:\n" << std::string(dates);
-    iterateAndModify([&] (Date& date) {
+    iterate([&] (Date& date) {
         date.prepareData();
     });
 }
 
-void Info::iterate(Container<Date>::FIterationConst f) {
-    dates.iterate(f);
-}
-void Info::iterateAndModify(Container<Date>::FIteration f) {
+void Info::iterate(Container<Date>::FIteration f) {
     dates.iterate(f);
 }
 

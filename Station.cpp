@@ -6,7 +6,7 @@ Station::Station(
     double _dayTempMin,
     double _humidity,
     int _downfall,
-    const std::string& _stationCode,
+    const std::string _stationCode,
     double _dayTempMax,
     double _wind
 ):

@@ -41,17 +41,19 @@ void Date::updateData() noexcept {
     if (stations.size() == 1) {
         humidityMin = humidityMax = stations.top().getHumidity();
         downfallAvg = stations.top().getDownfall();
+        dayTempMaxAvg = stations.top().getDayTempMax();
     } else if (stations.size() > 1) {
         if (humidityMin > stations.top().getHumidity())
             humidityMin = stations.top().getHumidity();
         else if (humidityMax < stations.top().getHumidity())
             humidityMax = stations.top().getHumidity();
         downfallAvg = (downfallAvg * (stations.size() - 1) + stations.top().getDownfall()) / stations.size();
-        // Station::roundDouble(downfallAvg, 1);
+        dayTempMaxAvg = (dayTempMaxAvg * (stations.size() - 1) + stations.top().getDayTempMax()) / stations.size();
     }
     std::cout << "Aggregated (size=" << std::to_string(stations.size()) << "): " << std::to_string(humidityMin)
         << " | " << std::to_string(humidityMax)
-        << " | " << std::to_string(getdownfallAvg());
+        << " | " << std::to_string(getdownfallAvg())
+        << " | " << std::to_string(getdayTempMaxAvg());
 }
 
 void Date::prepareData() {
@@ -60,7 +62,7 @@ void Date::prepareData() {
     std::cout << "SORTED:\n" << std::string(stations);
 }
 
-void Date::iterate(const Container<Station>::FIterationConst f) {
+void Date::iterate(const Container<Station>::FIteration f) {
     stations.iterate(f);
 }
 
@@ -71,6 +73,11 @@ double Date::gethumidityMin() const noexcept { return humidityMin; }
 double Date::gethumidityMax() const noexcept { return humidityMax; }
 double Date::getdownfallAvg() const noexcept {
     double d = downfallAvg;
+    Station::roundDouble(d, 1);
+    return d;
+}
+double Date::getdayTempMaxAvg() const noexcept {
+    double d = dayTempMaxAvg;
     Station::roundDouble(d, 1);
     return d;
 }

@@ -2,7 +2,6 @@
 #pragma once
 #include "Container.h"
 #include "Date.h"
-#include <functional>
 #include <string>
 #include <iostream>
 
@@ -17,7 +16,7 @@ public:
         int month,
         int day,
         int downfall,
-        const std::string& stationCode,
+        const std::string stationCode,
         double dayTempMax,
         double wind
     );
@@ -25,9 +24,8 @@ public:
     int getMaxDownfall() const noexcept;
     size_t getDateCount() const noexcept;
     void prepareData();
-    void iterate(Container<Date>::FIterationConst f);
+    void iterate(Container<Date>::FIteration f);
 private:
     int maxDownfall = 0;
     Container<Date> dates;
-    void iterateAndModify(Container<Date>::FIteration f);
 };

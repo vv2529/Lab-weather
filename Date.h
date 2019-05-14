@@ -24,6 +24,7 @@ public:
     double gethumidityMin() const noexcept;
     double gethumidityMax() const noexcept;
     double getdownfallAvg() const noexcept;
+    double getdayTempMaxAvg() const noexcept;
     bool operator == (const Date&) const noexcept;
     bool operator != (const Date&) const noexcept;
     bool operator < (const Date&) const noexcept;
@@ -32,7 +33,7 @@ public:
     bool operator >= (const Date&) const noexcept;
     operator std::string() const;
     void prepareData();
-    void iterate(Container<Station>::FIterationConst f);
+    void iterate(Container<Station>::FIteration f);
 
     Container<Station> stations;
 private:
@@ -41,7 +42,8 @@ private:
     double
         humidityMin = 0,
         humidityMax = 0,
-        downfallAvg = 0;
+        downfallAvg = 0,
+        dayTempMaxAvg = 0;
 
     static bool isValidYear(int); // 4 digits
     static bool isValidMonth(int); // 1 <= month <= 12

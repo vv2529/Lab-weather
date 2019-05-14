@@ -29,21 +29,22 @@ void input(Info& info, const char* fname) {
     builder.loadData(&info, fname);
     cout << "OK\n";
 }
+
 bool output(Info& info, const char* fname) {
     ostream *f;
+    ofstream f2;
     if (strcmp(fname, "#con") == 0) f = &cout;
     else {
-        ofstream f2(fname);
+        f2.open(fname);
         f = &f2;
-        //(*f).open(fname)
     }
     if (!*f) return false;
     const string del = "\t"s + Lexer::delimiters[0] + "\t"s;
     size_t record = 0;
 
-    auto _output = [&] (const Date& date) {
-        date.iterate([&] (const Station& station) {
-            *f << ++record <<del<<
+    auto _output = [&] (Date& date) {
+        date.iterate([&] (Station& station) {
+            (*f) << ++record <<del<<
                 date.getYear() <<del<<
                 station.getDayTempAvg() <<del<<
                 station.getDayTempMin() <<del<<
@@ -57,10 +58,51 @@ bool output(Info& info, const char* fname) {
         });
     };
 
+    (*f) << "header" <<del<< info.getMaxDownfall() << '\n';
     info.iterate(_output);
+    (*f) << "footer" <<del<< info.getDateCount() << '\n';
+
+    if (strcmp(fname, "#con") != 0) f2.close();
     return true;
 }
-bool stat(const Info& info, const char* fname) {
+bool stat(Info& info, const char* fname) {
+    ostream *f;
+    ofstream f2;
+    if (strcmp(fname, "#con") == 0) f = &cout;
+    else {
+        f2.open(fname);
+        f = &f2;
+    }
+    if (!*f) return false;
+    const char* del = ", ";
+
+    double tempSum;
+    info.iterate([&] (Date& date) {
+        tempSum += date.getdayTempMaxAvg();
+    });
+    double tempAvg = tempSum / info.getDateCount();
+    cout << "STAT: " << tempAvg << '\n';
+
+    info.iterate([&] (Date& date) {
+        if (date.getdayTempMaxAvg() < tempAvg) {
+            cout << '\t' << date.getdayTempMaxAvg() << " : " << string(date) << '\n';
+            (*f) << date.getDay() <<del<<
+                date.getMonth() <<del<<
+                date.getYear() <<del<<
+                date.gethumidityMax() <<del<<
+                date.gethumidityMin() <<del<<
+                date.getdownfallAvg() << '\n';
+
+            date.iterate([&] (Station& station) {
+                if (station.getHumidity() > 60 && station.getDownfall() <= 0) {
+                    (*f) << '\t' << station.getHumidity() <<del<<
+                        station.getDayTempAvg() <<del<<
+                        station.getStationCode() << '\n';
+                }
+            });
+        }
+    });
+
     return true;
 }
 

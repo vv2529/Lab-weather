@@ -13,7 +13,7 @@ public:
         double dayTempMin,
         double humidity,
         int downfall,
-        const std::string& stationCode,
+        const std::string stationCode,
         double dayTempMax,
         double wind
     );
@@ -37,7 +37,7 @@ private:
     double dayTempMin;
     double humidity;
     int downfall;
-    const std::string& stationCode;
+    const std::string stationCode;
     double dayTempMax;
     double wind;
 

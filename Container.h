@@ -13,7 +13,6 @@ public:
     using Fmatch = std::function<bool (const T&)>;// bool(*) (const T&);
     using Fcompare = std::function<short (const T&, const T&)>;// short(*) (const T&, const T&);
     using FIteration = std::function<void (T&)>;
-    using FIterationConst = std::function<void (const T&)>;
 
     Container();
     Container(const Container&) = delete;
